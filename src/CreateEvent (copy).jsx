@@ -1,9 +1,8 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 
-const componentName = 'EventDetails'
+const componentName = 'CreateEvent'
 
-class EventDetails extends React.Component {
+class CreateEvent extends React.Component {
   componentDidMount() {
     console.log(`${componentName} - Mount`)
   }
@@ -16,17 +15,12 @@ class EventDetails extends React.Component {
     console.log(`${componentName} - Unmount`)
   }
   render() {
-    const { match } = this.props
     return (
       <div>
-        <h2>EventDetails</h2>
-        id = {match.params.id}
-        <br/>
-        <Link to={`/new-event/${match.params.id}`}>Edit</Link>
+        <h2>CreateEvent</h2>
       </div>
     )
   }
-
 }
 
-export default EventDetails
+export default CreateEvent

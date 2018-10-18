@@ -1,27 +1,21 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import * as actions from './store/actions'
-import { eventCardsLogging } from './logging-control'
-import { green, red } from './logger'
 
 const componentName = 'EventCards'
-const log = eventCardsLogging
 
 class EventCards extends React.Component {
   componentDidMount() {
-    log && green(`${componentName} - Mount`)
-    this.props.addCrumb(componentName)
+    console.log(`${componentName} - Mount`)
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    log && console.log(`${componentName} - Update`)
+    console.log(`${componentName} - Update`)
   }
 
   componentWillUnmount() {
-    log && red(`${componentName} - Unmount`)
-    this.props.removeCrumb(componentName)
+    console.log(`${componentName} - Unmount`)
   }
   render() {
+    const { match } = this.props
     return (
       <div>
         <h2>EventCards</h2>
@@ -31,5 +25,4 @@ class EventCards extends React.Component {
 
 }
 
-const mstp = (state) => {return {}}
-export default connect(mstp, actions)(EventCards)
+export default EventCards

@@ -1,39 +1,28 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import * as actions from './store/actions'
-import { createEventLogging } from './logging-control'
-import { green, red } from './logger'
-const componentName = 'CreateEvent'
 
-const log = createEventLogging
+const componentName = 'CreateEvent'
 
 class CreateEvent extends React.Component {
   componentDidMount() {
-    log && green(`${componentName} - Mount`)
-    this.props.addCrumb(componentName)
+    console.log(`${componentName} - Mount`)
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    log && console.log(`${componentName} - Update`)
+    console.log(`${componentName} - Update`)
   }
 
   componentWillUnmount() {
-    log && red(`${componentName} - Unmount`)
-    this.props.removeCrumb(componentName)
+    console.log(`${componentName} - Unmount`)
   }
   render() {
-    const { match, history } = this.props
-
+    const { match } = this.props
     return (
       <div>
         <h2>CreateEvent</h2>
         <p>id={match.params.id || 'none'}</p>
-        <button onClick={history.goBack}>Go Back</button>
       </div>
     )
   }
 }
 
-const mstp = (state) => {return {}}
-
-export default connect(mstp, actions)(CreateEvent)
+export default CreateEvent
