@@ -27,23 +27,24 @@ const getIndent = (name) => {
   const l1 = 0
   const l2 = 20
   const l3 = 40
+  const l4 = 60
   switch (name) {
     case 'App':
       return l1
     case 'Home':
-      return l2
-    case 'EventCards':
       return l3
+    case 'EventCards':
+      return l4
     case 'CreateEvent':
-      return l2
+      return l3
     case 'MyEvents':
-      return l2
+      return l3
     case 'Home':
-      return l2
+      return l3
     case 'EventDetails':
-      return l2
+      return l3
     default:
-      return l1
+      return l2
   }
 }
 
