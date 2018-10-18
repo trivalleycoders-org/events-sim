@@ -1,8 +1,18 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import EventsController from './EventsController'
+import { BrowserRouter as Router } from "react-router-dom"
+import { Provider } from 'react-redux'
+import configureStore from './store'
+import App from './App'
 
 ReactDOM.render(
-  <EventsController />,
+
+  <Provider store={configureStore()}>
+    <Router>
+      <App />
+    </Router>
+  </Provider>,
+
   document.getElementById('root')
+
 )

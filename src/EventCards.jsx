@@ -1,28 +1,40 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import * as actions from './store/actions'
+import { eventCardsLogging } from './logging-control'
+import { wrapper, subComponentTitleStyle } from './styles'
+import { green, red } from './logger'
 
 const componentName = 'EventCards'
+const log = eventCardsLogging
 
 class EventCards extends React.Component {
   componentDidMount() {
-    console.log(`${componentName} - Mount`)
+    log && this.props.logEvent(`${componentName} - DidMount - start`, 'green')
+    this.props.addCrumb(componentName)
+    log && this.props.logEvent(`${componentName} - DidMount - end`, 'green')
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    console.log(`${componentName} - Update`)
+    log && this.props.logEvent(`${componentName} - DidUpdate - start`, 'blue')
+    log && this.props.logEvent(`${componentName} - DidUpdate - end`, 'blue')
   }
 
   componentWillUnmount() {
-    console.log(`${componentName} - Unmount`)
+    log && this.props.logEvent(`${componentName} - WillUnmount - start`, 'red')
+    this.props.removeCrumb(componentName)
+    log && this.props.logEvent(`${componentName} - WillUnmount - end`, 'red')
   }
   render() {
-    const { match } = this.props
+    log && this.props.logEvent(`${componentName} - Render`, 'purple')
     return (
-      <div>
-        <h2>EventCards</h2>
+      <div style={wrapper}>
+        <div style={subComponentTitleStyle}>EventCards</div>
       </div>
     )
   }
 
 }
 
-export default EventCards
+const mstp = (state) => {return {}}
+export default connect(mstp, actions)(EventCards)

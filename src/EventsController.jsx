@@ -1,53 +1,60 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { connect } from 'react-redux'
+import * as actions from './store/actions'
+import { Route, withRouter } from "react-router-dom";
 import CreateEvent from './CreateEvent'
 import MyEvents from './MyEvents'
-import EventCards from './EventCards'
 import EventDetails from './EventDetails'
+import Home from './Home'
+import { eventsControllerLogging } from './logging-control'
+import { controllerWrapper, subComponentTitleStyle } from './styles'
+import { green, red } from './logger'
 
 const componentName = 'EventsController'
+const log = eventsControllerLogging
 
+
+const titleStyle = {
+  marginRight: 30,
+}
 class EventsController extends React.Component {
-
+  state = {
+    goBack: this.props.history.goBack,
+  }
   componentDidMount() {
-    console.log(`${componentName} - Mount`)
+    log && this.props.logEvent(`${componentName} - DidMount - start`, 'green')
+    this.props.addCrumb(componentName)
+    log && this.props.logEvent(`${componentName} - DidMount - end`, 'green')
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    console.log(`${componentName} - Update`)
+    log && this.props.logEvent(`${componentName} - DidUpdate - start`, 'blue')
+    log && this.props.logEvent(`${componentName} - DidUpdate - end`, 'blue')
   }
 
   componentWillUnmount() {
-    console.log(`${componentName} - Unmount`)
+    log && this.props.logEvent(`${componentName} - WillUnmount - start`, 'red')
+    this.props.removeCrumb(componentName)
+    log && this.props.logEvent(`${componentName} - WillUnmount - end`, 'red')
   }
 
   render() {
+    log && this.props.logEvent(`${componentName} - Render`, 'purple')
     return (
-      <Router>
-        <div>
-          <ul>
-            <li>
-              <Link to="/">EventCards</Link>
-            </li>
-            <li>
-              <Link to="/new-event">CreateEvent</Link>
-            </li>
-            <li>
-              <Link to="/my-events">MyEvents</Link>
-            </li>
-          </ul>
-
-          <hr />
-
-          <Route exact path="/" component={EventCards} />
-          <Route exact path="/new-event" component={CreateEvent} />
-          <Route exact path="/new-event/:id" component={CreateEvent} />
-          <Route path="/my-events" component={MyEvents} />
-          <Route path='/event-details/:id' component={EventDetails} />
-        </div>
-      </Router>
+      <div style={controllerWrapper}>
+      <div style={subComponentTitleStyle}>EventsController</div>
+        <Route exact path="/" component={Home} />
+        <Route exact path="/new-event" component={CreateEvent} />
+        <Route exact path="/new-event/:id" component={CreateEvent} />
+        <Route path="/my-events" component={MyEvents} />
+        <Route path='/event-details/:id' component={EventDetails} />
+      </div>
     )
   }
 
 }
-export default EventsController;
+
+const mstp = (state) => {return {}}
+
+
+export default withRouter(connect(mstp, actions)(EventsController))

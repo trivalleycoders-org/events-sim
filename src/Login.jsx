@@ -1,15 +1,14 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import * as actions from './store/actions'
-import { createEventLogging } from './logging-control'
+import { loginLogging } from './logging-control'
 import { wrapper, subComponentTitleStyle } from './styles'
-import { green, red } from './logger'
-const componentName = 'CreateEvent'
+import { red, green } from './logger'
 
+const componentName = 'Login'
+const log = loginLogging
 
-const log = createEventLogging
-
-class CreateEvent extends React.Component {
+class Login extends React.Component {
   componentDidMount() {
     log && this.props.logEvent(`${componentName} - DidMount - start`, 'green')
     this.props.addCrumb(componentName)
@@ -26,14 +25,12 @@ class CreateEvent extends React.Component {
     this.props.removeCrumb(componentName)
     log && this.props.logEvent(`${componentName} - WillUnmount - end`, 'red')
   }
+
   render() {
-    const { match, history } = this.props
     log && this.props.logEvent(`${componentName} - Render`, 'purple')
     return (
       <div style={wrapper}>
-        <div style={subComponentTitleStyle}>CreateEvent</div>
-        <p>id={match.params.id || 'none'}</p>
-        <button onClick={history.goBack}>Go Back</button>
+        <div style={subComponentTitleStyle}>Login</div>
       </div>
     )
   }
@@ -41,4 +38,4 @@ class CreateEvent extends React.Component {
 
 const mstp = (state) => {return {}}
 
-export default connect(mstp, actions)(CreateEvent)
+export default connect(mstp, actions)(Login)
